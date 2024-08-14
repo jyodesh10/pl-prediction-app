@@ -35,26 +35,31 @@ class _FriendsPageState extends State<FriendsPage> {
                 ),
                 title: Text(userdata[index]['username'].toString()),
                 subtitle: Text(userdata[index]['email'].toString(), style: const TextStyle(fontSize: 12),),
-                trailing: TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => 
-                      UserPredictionView(
-                        prediction: userdata[index]['prediction'],
-                        user: userdata[index]['username'],
+                trailing: 
+                userdata[index]['enabled'] == true
+                  ? const Text("Pending", style: TextStyle(
+                    color: Colors.green
+                  ),)
+                  : TextButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => 
+                        UserPredictionView(
+                          prediction: userdata[index]['prediction'],
+                          user: userdata[index]['username'],
+                          ),
+                          ));
+                    }, 
+                    style: ButtonStyle(
+                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Colors.purple,
+                          width: 1.5
                         ),
-                        ));
-                  }, 
-                  style: ButtonStyle(
-                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Colors.purple,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(15)
-                    ))
+                        borderRadius: BorderRadius.circular(15)
+                      ))
+                    ),
+                    child: const Text("View Prediction", style: TextStyle(fontSize: 10),) 
                   ),
-                  child: const Text("View Prediction", style: TextStyle(fontSize: 10),) 
-                ),
               );
             },
           );

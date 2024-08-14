@@ -1,11 +1,11 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pl_prediction/apis.dart';
 import 'package:pl_prediction/local/sharedPref.dart';
 import 'package:pl_prediction/login_page.dart';
-import 'package:pl_prediction/model.dart';
 import 'package:pl_prediction/widget/dialogs.dart';
 import 'package:pl_prediction/widget/snackbars.dart';
 
@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  late BootStrapModel _bootStrapModel;
   bool loading = false;
   FirebaseAuth auth = FirebaseAuth.instance;
   bool enabled = true;
@@ -32,21 +31,22 @@ class _HomePageState extends State<HomePage> {
 
   fetchData() async {
     loading = true;
-    _bootStrapModel = await Apis().fetchBootstrapData();
-    if(_bootStrapModel.teams!.isNotEmpty) {
-      saveIfEmpty();
-    }
+    saveIfEmpty();
   }
 
   saveIfEmpty() async {
     await FirebaseFirestore.instance.collection("users").doc(auth.currentUser!.email).get().then((value) async {
       if(value.data()?["prediction"].isEmpty) {
-        await FirebaseFirestore.instance.collection("users").doc(auth.currentUser!.email).update({
-          "prediction" : List.generate(_bootStrapModel.teams!.length, (index) => {
-            "rank" : index+1,
-            "code" : _bootStrapModel.teams![index].code,
-            "team" : _bootStrapModel.teams![index].name,
-          })
+        await FirebaseFirestore.instance.collection("teams").get().then((value) async {
+          log(value.docs.first.data().toString());
+          final data = value.docs.first.data();
+          await FirebaseFirestore.instance.collection("users").doc(auth.currentUser!.email).update({
+            "prediction" : List.generate(data['teams'].length, (index) => {
+              "rank" : index+1,
+              "code" : data['teams'][index]['code'],
+              "team" : data['teams'][index]['team'],
+            })
+          });
         });
         setState(() {
           predictiondata = value.data()!['prediction'];
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text((index+1).toString(), style: const TextStyle(fontSize: 15),)),
                 title: Row(
                   children: [
-                    Image.network("https://resources.premierleague.com/premierleague/badges/t${predictiondata[index]['code']}.png", height: 30,),
+                    Image.network("https://resources.premierleague.com/premierleague/badges/100/t${predictiondata[index]['code']}.png", height: 30,),
                     const SizedBox(
                       width: 12,
                     ),

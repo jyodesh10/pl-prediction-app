@@ -103,7 +103,7 @@ class _UserPredictionViewState extends State<UserPredictionView> {
             child: Text((index+1).toString(), style: const TextStyle(fontSize: 15),)),
           title: Row(
             children: [
-              Image.network("https://resources.premierleague.com/premierleague/badges/t${widget.prediction[index]['code']}.png", height: 30,),
+              Image.network("https://resources.premierleague.com/premierleague/badges/100/t${widget.prediction[index]['code']}.png", height: 30,),
               const SizedBox(
                 width: 12,
               ),

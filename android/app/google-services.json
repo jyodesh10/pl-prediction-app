@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "196895963767",
+    "project_id": "pl-prediction-d61a7",
+    "storage_bucket": "pl-prediction-d61a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196895963767:android:e69904550b0a99c7f86472",
+        "android_client_info": {
+          "package_name": "com.zyodes.pl_prediction"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4fqUKPIKzyGAeQoZ1btiMz_HaU20X0R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

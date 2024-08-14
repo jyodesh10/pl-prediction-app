@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pl_prediction/banter_page.dart';
 import 'package:pl_prediction/friends_page.dart';
 import 'package:pl_prediction/home_page.dart';
 
@@ -17,7 +18,9 @@ class _NavPageState extends State<NavPage> {
     return Scaffold(
       body: selectedIndex == 0
         ? const HomePage()
-        : const FriendsPage(),
+        : selectedIndex == 1
+          ? const FriendsPage()
+          : const BanterPage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (value) {
@@ -33,6 +36,10 @@ class _NavPageState extends State<NavPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.group), 
             label: "Friends"
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat), 
+            label: "Banter"
           ),
         ]
       ),

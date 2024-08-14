@@ -2,11 +2,11 @@
 
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:pl_prediction/nav_page.dart";
 import "package:pl_prediction/register_page.dart";
 import "package:pl_prediction/widget/dialogs.dart";
 
 import "local/sharedPref.dart";
+import "nav_page.dart";
 import "widget/snackbars.dart";
 
 class LoginPage extends StatefulWidget {
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
         LocalPref.setString("email", email.text);
         LocalPref.setString("password", password.text);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NavPage(),), (route) => false,);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const NavPage(),), (route) => false,);
       }
 
     } on FirebaseAuthException catch (e) {
